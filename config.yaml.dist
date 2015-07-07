@@ -1,0 +1,7 @@
+TOKEN: 'xoxb-1234567890-aBcDeFgHiJkLmNoPqRsTuVwX'
+
+CHANNELS:
+  - "#general"
+
+PLUGIN_DIR: "plugins"
+COMMAND_PREFIX: !
