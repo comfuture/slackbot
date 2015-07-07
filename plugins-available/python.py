@@ -19,6 +19,7 @@ class Python(Plugin):
         """evaluates python code
         ex) !py 1+1
         """
+        # XXX: parser unwraps double quote of outside of argument
         line = u' '.join(args)
         print self.env.eval(line)
         return unicode(self.env.eval(line))

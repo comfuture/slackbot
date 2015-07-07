@@ -20,7 +20,7 @@ class SimSimi(Plugin):
                 s.startswith(u'이쁜아') or s.startswith(u'이쁘나'):
                 resp = requests.get('http://sandbox.api.simsimi.com/request.p',
                     params=dict(
-                        key=KEY,
+                        key=self.key,
                         lc='ko',
                         text=s.replace(u'이쁜', u'심심'),
                         ft='1.0'
