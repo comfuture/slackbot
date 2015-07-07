@@ -24,7 +24,7 @@ def parse_command(s):
         parsed = csv.reader([sentence], dialect='cmdparser').next()
         args = [arg.decode('utf-8') for arg in parsed if arg]
         if args:
-            cmd = args.pop(0)[1:]
+            cmd = args.pop(0)
             yield (cmd, args)
 
 FORMAT = '%(asctime)-15s %(message)s'
@@ -65,7 +65,7 @@ class SlackBot(object):
     def process_message(self, message):
         if 'type' not in message:
             return
-        print message
+        prefix = self.config.get('COMMAND_PREFIX', '!')
         self.log.debug(message)
         # process command
         def find_plugin(cmd):
@@ -73,9 +73,9 @@ class SlackBot(object):
                 if isinstance(obj, cmd.plugin):
                     return obj
         if message['type'] == 'message' and 'text' in message:
-            if message['text'].startswith('!'):
+            if message['text'].startswith(prefix):
                 for cmd, args in parse_command(message['text']):
-                    if cmd in Plugin._commands:
+                    if cmd[len(prefix):] in Plugin._commands:
                         commands = Plugin._commands[cmd]
                         for command in commands:
                             obj = find_plugin(command)
@@ -144,7 +144,7 @@ class SlackBot(object):
 
 
 class SystemPlugin(Plugin):
-    """ """
+    """default handler for mantain plugins and commands"""
     def on_attach(self, config):
         pass
 
